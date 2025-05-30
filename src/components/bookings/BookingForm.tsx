@@ -18,7 +18,7 @@ const CustomInput = React.forwardRef(({ value, onClick }: any, ref: any) => (
     type="button"
     onClick={onClick}
     ref={ref}
-    className="w-64 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 bg-white text-left flex items-center"
+    className="w-40 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 bg-white text-left flex items-center"
   >
     {value || 'Select date'}
   </button>
