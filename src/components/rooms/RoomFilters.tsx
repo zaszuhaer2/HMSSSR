@@ -75,7 +75,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
         </div>
         
         <div>
-          <label htmlFor="startDate" className="w-full block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">
             Start Date
           </label>
           <DatePicker
