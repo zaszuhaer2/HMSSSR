@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { RoomCategory, RoomFilter } from '../../types';
 import { Search, Filter } from 'lucide-react';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from 'date-fns';
 
 interface RoomFiltersProps {
   onFilterChange: (filter: RoomFilter) => void;
@@ -8,8 +11,8 @@ interface RoomFiltersProps {
 
 const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
   const [category, setCategory] = useState<RoomCategory | ''>('');
-  const [startDate, setStartDate] = useState<string>('');
-  const [endDate, setEndDate] = useState<string>('');
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
   
   const categories: RoomCategory[] = ['Double', 'Couple', 'Connecting'];
   
@@ -21,22 +24,33 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
     if (startDate && !endDate) {
       const nextDay = new Date(startDate);
       nextDay.setDate(nextDay.getDate() + 1);
-      effectiveEndDate = nextDay.toISOString().split('T')[0];
+      effectiveEndDate = nextDay;
     }
     
     onFilterChange({
       category: category ? category as RoomCategory : undefined,
-      startDate: startDate || undefined,
-      endDate: effectiveEndDate || undefined,
+      startDate: startDate ? format(startDate, 'yyyy-MM-dd') : undefined,
+      endDate: effectiveEndDate ? format(effectiveEndDate, 'yyyy-MM-dd') : undefined,
     });
   };
   
   const handleClearFilters = () => {
     setCategory('');
-    setStartDate('');
-    setEndDate('');
+    setStartDate(null);
+    setEndDate(null);
     onFilterChange({});
   };
+
+  const CustomInput = React.forwardRef(({ value, onClick }: any, ref: any) => (
+    <button
+      type="button"
+      onClick={onClick}
+      ref={ref}
+      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 bg-white text-left"
+    >
+      {value || 'Select date'}
+    </button>
+  ));
   
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-4 mb-6">
@@ -64,12 +78,17 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
           <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">
             Start Date
           </label>
-          <input
-            type="date"
-            id="startDate"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            customInput={<CustomInput />}
+            dateFormat="dd/MM/yyyy"
+            isClearable
+            placeholderText="Select start date"
+            todayButton="Today"
+            className="w-full"
+            calendarClassName="border border-gray-200 rounded-lg shadow-lg"
+            showPopperArrow={false}
           />
         </div>
         
@@ -77,14 +96,19 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
           <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-1">
             End Date
           </label>
-          <input
-            type="date"
-            id="endDate"
-            value={endDate}
-            min={startDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            customInput={<CustomInput />}
+            dateFormat="dd/MM/yyyy"
+            isClearable
+            placeholderText="Select end date"
+            todayButton="Today"
+            minDate={startDate}
             disabled={!startDate}
+            className="w-full"
+            calendarClassName="border border-gray-200 rounded-lg shadow-lg"
+            showPopperArrow={false}
           />
         </div>
         
