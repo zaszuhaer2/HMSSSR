@@ -3,6 +3,8 @@ import { useBookingStore } from '../../store/useBookingStore';
 import { useGuestStore } from '../../store/useGuestStore';
 import { useRoomStore } from '../../store/useRoomStore';
 import { format, addDays, isBefore, parseISO } from 'date-fns';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import toast from 'react-hot-toast';
 
 interface BookingFormProps {
