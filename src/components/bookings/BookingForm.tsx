@@ -230,7 +230,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ roomId, onSubmit, onCancel })
 
       {endDate && (
         <div className="bg-blue-50 p-3 rounded-md text-blue-800">
-          <p>Check-out date will be: <strong>{format(endDate, 'yyyy-MM-dd')}</strong></p>
+          <p>Check-out date will be: <strong>{format(endDate, 'dd-MM-yyyy')}</strong></p>
         </div>
       )}
 
