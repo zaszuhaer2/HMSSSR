@@ -41,9 +41,11 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
     onFilterChange({});
   };
 
-  const handleEndDateClear = () => {
-    setStartDate(null);
-    setEndDate(null);
+  const handleStartDateChange = (date: Date | null) => {
+    setStartDate(date);
+    if (!date) {
+      setEndDate(null);
+    }
   };
 
   const CustomInput = React.forwardRef(({ value, onClick }: any, ref: any) => (
@@ -85,7 +87,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
           </label>
           <DatePicker
             selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            onChange={handleStartDateChange}
             customInput={<CustomInput />}
             dateFormat="dd/MM/yyyy"
             isClearable
@@ -107,7 +109,6 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
             customInput={<CustomInput />}
             dateFormat="dd/MM/yyyy"
             isClearable
-            onCalendarClose={() => !endDate && handleEndDateClear()}
             placeholderText="Select end date"
             todayButton="Today"
             minDate={startDate}
