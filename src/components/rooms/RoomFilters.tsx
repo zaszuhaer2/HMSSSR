@@ -70,7 +70,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value as RoomCategory | '')}
-            className="w-full h-[38px] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+            className="w-full h-[38px] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 text-left"
           >
             <option value="">All Categories</option>
             {categories.map((cat) => (
