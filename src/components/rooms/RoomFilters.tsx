@@ -41,12 +41,17 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
     onFilterChange({});
   };
 
+  const handleEndDateClear = () => {
+    setStartDate(null);
+    setEndDate(null);
+  };
+
   const CustomInput = React.forwardRef(({ value, onClick }: any, ref: any) => (
     <button
       type="button"
       onClick={onClick}
       ref={ref}
-      className="w-40 px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 bg-white text-left"
+      className="w-full h-[38px] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 bg-white text-left"
     >
       {value || 'Select date'}
     </button>
@@ -63,7 +68,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value as RoomCategory | '')}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
+            className="w-full h-[38px] px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500"
           >
             <option value="">All Categories</option>
             {categories.map((cat) => (
@@ -74,7 +79,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
           </select>
         </div>
         
-<div>
+        <div>
           <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">
             Start Date
           </label>
@@ -102,6 +107,7 @@ const RoomFilters: React.FC<RoomFiltersProps> = ({ onFilterChange }) => {
             customInput={<CustomInput />}
             dateFormat="dd/MM/yyyy"
             isClearable
+            onCalendarClose={() => !endDate && handleEndDateClear()}
             placeholderText="Select end date"
             todayButton="Today"
             minDate={startDate}
